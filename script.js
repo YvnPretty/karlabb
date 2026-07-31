@@ -99,6 +99,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     window.history.pushState(null, null, targetId);
                 }
             }
+            window.requestAnimationFrame(step);
+        });
+    });
+
     // --- CANVAS INTERACTIVO (Fondo Hero - Efecto Agua/Partículas) ---
     const canvas = document.getElementById('hero-canvas');
     if (canvas) {
