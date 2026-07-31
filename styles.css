@@ -92,7 +92,7 @@ ul {
 }
 
 .section-padding {
-    padding: var(--spacing-xl) 0;
+    padding: 4rem 0; /* Padding reducido para móviles */
 }
 
 .text-center { text-align: center; }
@@ -265,8 +265,9 @@ ul {
 }
 
 .hero p {
-    font-size: 1.125rem;
+    font-size: 1rem;
     margin-bottom: var(--spacing-md);
+    padding: 0 1rem;
 }
 
 /* Animaciones */
@@ -373,7 +374,7 @@ ul {
 .footer-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--spacing-lg);
+    gap: var(--spacing-md); /* Gap reducido para móviles */
 }
 
 .footer h3, .footer h4 {
@@ -440,16 +441,15 @@ ul {
 }
 
 .float-ws {
-    bottom: 40px;
-    right: 40px;
+    bottom: 20px;
+    right: 20px;
     background-color: #25d366;
 }
 
 .float-ig {
-    bottom: 110px; /* Colocado encima del botón de whatsapp si estuvieran en el mismo lado, pero lo pondré a la izquierda para balancear */
-    right: 40px; /* Cambiado a izquierda (left: 40px) para balancear la vista */
-    left: 40px;
-    right: auto;
+    bottom: 90px;
+    right: 20px;
+    left: auto;
     background-color: #E1306C;
 }
 
@@ -467,11 +467,18 @@ ul {
     .mobile-menu { display: none !important; } /* Desactiva el móvil en desktop */
     
     .nav-container { padding: 1rem var(--spacing-md); }
+    
+    .section-padding { padding: var(--spacing-xl) 0; }
+    .hero p { font-size: 1.125rem; padding: 0; }
 
     /* Grids */
     .services-grid { grid-template-columns: repeat(2, 1fr); gap: var(--spacing-lg); }
     .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: var(--spacing-md); }
-    .footer-grid { grid-template-columns: repeat(3, 1fr); gap: var(--spacing-md); }
+    .footer-grid { grid-template-columns: repeat(3, 1fr); gap: var(--spacing-lg); }
+    
+    /* Botones Flotantes Desktop */
+    .float-ws { bottom: 40px; right: 40px; }
+    .float-ig { bottom: 110px; right: auto; left: 40px; }
 }
 
 @media (min-width: 1024px) {
