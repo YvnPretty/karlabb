@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     this.baseY = this.y;
                     this.density = (Math.random() * 15) + 5;
                     // Se elegirá dinámicamente según el tamaño del array precargado
-                    this.imageIndex = Math.floor(Math.random() * 8); // 3 charms + 5 fotos = 8
+                    this.imageIndex = Math.floor(Math.random() * 12); // 7 charms + 5 fotos = 12
                     this.angle = Math.random() * 360; // Para rotación
                     this.rotationSpeed = (Math.random() - 0.5) * 2;
                     this.opacity = Math.random() * 0.5 + 0.3; // 0.3 a 0.8
@@ -225,6 +225,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 'assets/charm1.png', // Uña press on
                 'assets/charm2.png', // Frasco de esmalte
                 'assets/charm3.png', // Moño kawaii
+                'assets/charm4.png', // Lima de uñas
+                'assets/charm5.png', // Pincel acrílico
+                'assets/charm6.png', // Lámpara UV
+                'assets/charm7.png', // Bote de glitter
                 'assets/galeria-1.jpg',
                 'assets/galeria-2.jpg',
                 'assets/galeria-3.jpg',
