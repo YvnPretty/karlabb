@@ -224,3 +224,41 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error("Error en canvas interactivo:", e);
     }
 });
+
+
+// --- Lógica del Visor de Catálogo (Lightbox Modal) ---
+document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('image-modal');
+    const modalImg = document.getElementById('modal-img');
+    const closeBtn = document.querySelector('.modal-close');
+    const galleryImages = document.querySelectorAll('.gallery-img');
+
+    // Abrir modal al hacer clic en imagen
+    galleryImages.forEach(img => {
+        img.addEventListener('click', function() {
+            modal.style.display = 'block';
+            // Pequeño timeout para que la transición de opacidad funcione
+            setTimeout(() => {
+                modal.classList.add('show');
+            }, 10);
+            modalImg.src = this.src;
+        });
+    });
+
+    // Cerrar modal al hacer clic en la X
+    closeBtn.addEventListener('click', closeModal);
+
+    // Cerrar modal al hacer clic fuera de la imagen
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+
+    function closeModal() {
+        modal.classList.remove('show');
+        setTimeout(() => {
+            modal.style.display = 'none';
+        }, 300); // Esperar a que termine la transición
+    }
+});
