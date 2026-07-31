@@ -358,15 +358,15 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', () => {
     const themeToggleBtn = document.getElementById('themeToggleBtn');
     const themeIcon = document.getElementById('themeIcon');
-    const body = document.body;
+    const docEl = document.documentElement;
     const THEME_KEY = 'karillusion_theme';
 
     function setTheme(theme) {
         if (theme === 'dark') {
-            body.classList.add('dark-theme');
+            docEl.classList.add('dark-theme');
             if(themeIcon) themeIcon.src = 'assets/polish_dark.png';
         } else {
-            body.classList.remove('dark-theme');
+            docEl.classList.remove('dark-theme');
             if(themeIcon) themeIcon.src = 'assets/polish_light.png';
         }
         localStorage.setItem(THEME_KEY, theme);
@@ -379,7 +379,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Evento Click
     if(themeToggleBtn) {
         themeToggleBtn.addEventListener('click', () => {
-            const currentTheme = body.classList.contains('dark-theme') ? 'dark' : 'light';
+            const currentTheme = docEl.classList.contains('dark-theme') ? 'dark' : 'light';
             const newTheme = currentTheme === 'light' ? 'dark' : 'light';
             
             // Animación de rebote al hacer click

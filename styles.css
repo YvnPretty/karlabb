@@ -36,7 +36,7 @@
     --transition-fast: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-body.dark-theme {
+html.dark-theme {
     /* --- TEMA OSCURO --- */
     --color-bg-primary: #252222; /* Carbón suave oscuro (Soft Dark) */
     --color-bg-secondary: #302C2C; /* Tono oscuro ligeramente más claro para tarjetas */
@@ -764,38 +764,36 @@ ul {
     align-self: flex-start;
 }
 
-/* --- Botón Magico (Barniz) para Tema --- */
-.theme-toggle {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    width: 60px;
-    height: 60px;
+/* --- Botón Magico (Barniz) en Navbar --- */
+.theme-toggle-nav {
+    width: 35px;
+    height: 35px;
     background: transparent;
     border: none;
     cursor: pointer;
-    z-index: 100;
-    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    margin-right: 15px; /* Espacio antes de la hamburguesa */
 }
-.theme-toggle img {
+.theme-toggle-nav img {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.2));
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
     transition: transform 0.4s ease, filter 0.4s ease;
 }
-.theme-toggle:hover img {
+.theme-toggle-nav:hover img {
     transform: scale(1.15) rotate(-10deg);
-    filter: drop-shadow(0 15px 20px rgba(0,0,0,0.3));
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
 }
+
 @media (min-width: 768px) {
-    .theme-toggle {
-        bottom: 40px;
-        left: 40px;
-        width: 80px;
-        height: 80px;
+    .theme-toggle-nav {
+        width: 40px;
+        height: 40px;
+        margin-right: 0;
+        margin-left: 15px;
     }
 }
