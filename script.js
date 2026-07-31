@@ -132,12 +132,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 constructor() {
                     this.x = Math.random() * width;
                     this.y = Math.random() * height;
-                    this.size = Math.random() * 18 + 12; // Más grande (12 a 30px base)
+                    this.size = Math.random() * 20 + 15; // Tamaño aún más grande (Gama Plus)
                     this.baseX = this.x;
                     this.baseY = this.y;
                     this.density = (Math.random() * 15) + 5;
-                    // Se elegirá dinámicamente según el tamaño del array precargado
-                    this.imageIndex = Math.floor(Math.random() * 12); // 7 charms + 5 fotos = 12
+                    this.imageIndex = Math.floor(Math.random() * 11); // 11 charms en total
                     this.angle = Math.random() * 360; // Para rotación
                     this.rotationSpeed = (Math.random() - 0.5) * 2;
                     this.opacity = Math.random() * 0.5 + 0.3; // 0.3 a 0.8
@@ -149,30 +148,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     ctx.translate(this.x, this.y);
                     ctx.rotate(this.angle * Math.PI / 180);
                     
-                    // Dibujar imagen (Foto o Charm)
+                    // Dibujar charm (sin fotos polaroids)
                     if (window.particleImages && window.particleImages[this.imageIndex] && window.particleImages[this.imageIndex].complete) {
                         const img = window.particleImages[this.imageIndex];
-                        const isPolaroid = img.src.includes('galeria-');
                         const renderSize = this.size * 2.5;
                         
-                        if (isPolaroid) {
-                            // Estilo polaroid para las fotos
-                            ctx.shadowColor = 'rgba(0,0,0,0.2)';
-                            ctx.shadowBlur = 10;
-                            ctx.fillStyle = '#fff';
-                            ctx.fillRect(-renderSize/2 - 2, -renderSize/2 - 2, renderSize + 4, renderSize + 4);
-                            ctx.shadowColor = 'transparent'; // quitar sombra interna
-                        } else {
-                            // Estilo suelto para los charms transparentes
-                            ctx.shadowColor = 'rgba(0,0,0,0.15)';
-                            ctx.shadowBlur = 6;
-                            ctx.shadowOffsetY = 4;
-                        }
+                        // Estilo suelto para los charms transparentes (más elegante)
+                        ctx.shadowColor = 'rgba(0,0,0,0.2)';
+                        ctx.shadowBlur = 10;
+                        ctx.shadowOffsetY = 5;
                         
                         ctx.drawImage(img, -renderSize/2, -renderSize/2, renderSize, renderSize);
                     } else {
                         // Fallback temporal si la imagen no ha cargado
-                        ctx.fillStyle = '#f4a6b1';
+                        ctx.fillStyle = '#E5C0C8'; // Color blush premium
                         ctx.beginPath();
                         ctx.arc(0, 0, this.size, 0, Math.PI * 2);
                         ctx.fill();
@@ -219,21 +208,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            // Precargar todas las imágenes (Charms y Fotos)
+            // Precargar solo Charms
             window.particleImages = [];
             const imageUrls = [
-                'assets/charm1.png', // Uña press on
-                'assets/charm2.png', // Frasco de esmalte
-                'assets/charm3.png', // Moño kawaii
-                'assets/charm4.png', // Lima de uñas
-                'assets/charm5.png', // Pincel acrílico
-                'assets/charm6.png', // Lámpara UV
-                'assets/charm7.png', // Bote de glitter
-                'assets/galeria-1.jpg',
-                'assets/galeria-2.jpg',
-                'assets/galeria-3.jpg',
-                'assets/galeria-4.jpg',
-                'assets/galeria-5.jpg'
+                'assets/charm1.png', 
+                'assets/charm2.png', 
+                'assets/charm3.png', 
+                'assets/charm4.png', 
+                'assets/charm5.png', 
+                'assets/charm6.png', 
+                'assets/charm7.png', 
+                'assets/charm8.png', 
+                'assets/charm9.png', 
+                'assets/charm10.png', 
+                'assets/charm11.png'
             ];
             imageUrls.forEach(url => {
                 const img = new Image();
