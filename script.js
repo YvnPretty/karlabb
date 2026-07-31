@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- CANVAS INTERACTIVO (Fondo Hero) ---
     try {
-        const canvas = document.getElementById('hero-canvas');
+        const canvas = document.getElementById('bg-canvas');
         if (canvas) {
             const ctx = canvas.getContext('2d');
             let width, height;
