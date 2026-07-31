@@ -2,13 +2,14 @@
    Variables y Configuración Base
    ========================================================================== */
    :root {
-    --color-bg-primary: #FCFBFA; /* Blanco hueso / Crema */
-    --color-bg-secondary: #F6F3F2; /* Ligero tono piedra/taupe */
-    --color-text-primary: #2B2A29; /* Carbón profundo, más suave que el negro */
-    --color-text-secondary: #7A7571; /* Gris cálido / Taupe para textos */
-    --color-accent: #C4969C; /* Rose Gold / Blush elegante */
-    --color-accent-hover: #A87B81;
+    --color-bg-primary: #252222; /* Carbón suave oscuro (Soft Dark) */
+    --color-bg-secondary: #302C2C; /* Tono oscuro ligeramente más claro para tarjetas */
+    --color-text-primary: #FCFBFA; /* Texto claro de alto contraste */
+    --color-text-secondary: #D5D1CE; /* Texto secundario gris claro */
+    --color-accent: #E5B2B8; /* Rose Gold más brillante para resaltar en fondo oscuro */
+    --color-accent-hover: #C9969C;
     --color-white: #ffffff;
+    --color-card-bg: rgba(48, 44, 44, 0.8);
     
     /* Tipografía Gama Plus */
     --font-heading: 'Playfair Display', serif;
@@ -116,8 +117,8 @@ ul {
 .text-light { color: var(--color-white); }
 .text-light h2, .text-light p { color: var(--color-white); }
 
-.bg-light { background-color: rgba(255, 255, 255, 0.4); } /* Semitransparente para ver partículas */
-.bg-dark { background-color: var(--color-bg-dark); }
+.bg-light { background-color: var(--color-bg-secondary); } /* Adaptado para el tema oscuro */
+.bg-dark { background-color: var(--color-bg-primary); }
 
 .mt-1 { margin-top: var(--spacing-sm); }
 .mt-2 { margin-top: var(--spacing-md); }
@@ -170,7 +171,7 @@ ul {
     top: 0;
     left: 0;
     width: 100%;
-    background-color: rgba(252, 251, 250, 0.7);
+    background-color: rgba(37, 34, 34, 0.7); /* Oscuro translúcido */
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     z-index: 1000;
@@ -333,7 +334,7 @@ ul {
 }
 
 .service-card {
-    background-color: var(--color-white);
+    background-color: var(--color-card-bg);
     padding: var(--spacing-md);
     border-radius: var(--border-radius-md);
     box-shadow: var(--shadow-soft);
@@ -411,8 +412,8 @@ ul {
    Footer & Contacto
    ========================================================================== */
 .footer {
-    background-color: var(--color-white);
-    border-top: 1px solid rgba(0,0,0,0.05);
+    background-color: var(--color-bg-secondary);
+    border-top: 1px solid rgba(255,255,255,0.05);
 }
 
 .footer-grid {
@@ -663,4 +664,83 @@ ul {
     .modal-content {
         width: 95%;
     }
+}
+
+/* --- Sección de Reseñas --- */
+.reviews-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+}
+@media (min-width: 768px) {
+    .reviews-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.review-card {
+    background-color: var(--color-card-bg);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-soft);
+    border: 1px solid rgba(255,255,255,0.05);
+}
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+.review-name {
+    font-weight: 600;
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    color: var(--color-accent);
+}
+.review-stars {
+    color: #FFD700;
+    letter-spacing: 2px;
+}
+.review-text {
+    font-style: italic;
+    color: var(--color-text-secondary);
+}
+
+/* Formulario de Reseñas */
+.review-form-container {
+    background-color: var(--color-card-bg);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-lg);
+    margin-bottom: var(--spacing-md);
+    border: 1px solid rgba(255,255,255,0.05);
+}
+.review-form-container h3 {
+    margin-bottom: 1.5rem;
+}
+.review-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.review-form input,
+.review-form textarea,
+.review-form select {
+    width: 100%;
+    padding: 1rem;
+    background: rgba(0,0,0,0.2);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--color-text-primary);
+    border-radius: var(--border-radius-md);
+    font-family: var(--font-body);
+}
+.review-form input:focus,
+.review-form textarea:focus,
+.review-form select:focus {
+    outline: none;
+    border-color: var(--color-accent);
+}
+.review-form button {
+    cursor: pointer;
+    align-self: flex-start;
 }

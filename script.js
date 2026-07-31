@@ -281,8 +281,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Cerrar modal al hacer clic en la X
     closeBtn.addEventListener('click', closeModal);
 
-    // Cerrar modal al hacer clic fuera de la imagen
-    modal.addEventListener('click', function(e) {
+    // Cerrar con click fuera
+    window.addEventListener('click', (e) => {
         if (e.target === modal) {
             closeModal();
         }
@@ -293,5 +293,63 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             modal.style.display = 'none';
         }, 300); // Esperar a que termine la transición
+    }
+});
+
+// --- Lógica de Reseñas (Local Storage) ---
+document.addEventListener('DOMContentLoaded', () => {
+    const reviewForm = document.getElementById('reviewForm');
+    const reviewsContainer = document.getElementById('reviewsContainer');
+    const STORAGE_KEY = 'karillusion_reviews';
+
+    // Función para crear tarjeta de reseña
+    function createReviewCard(name, rating, text) {
+        const div = document.createElement('div');
+        div.className = 'review-card';
+        const stars = '⭐'.repeat(rating);
+        div.innerHTML = `
+            <div class="review-header">
+                <span class="review-name">${name}</span>
+                <span class="review-stars">${stars}</span>
+            </div>
+            <p class="review-text">"${text}"</p>
+        `;
+        return div;
+    }
+
+    // Cargar reseñas guardadas
+    function loadReviews() {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+            const reviews = JSON.parse(saved);
+            reviews.forEach(r => {
+                reviewsContainer.insertBefore(createReviewCard(r.name, r.rating, r.text), reviewsContainer.firstChild);
+            });
+        }
+    }
+
+    if(reviewForm) {
+        loadReviews();
+
+        reviewForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('reviewName').value;
+            const rating = parseInt(document.getElementById('reviewRating').value);
+            const text = document.getElementById('reviewText').value;
+
+            // Mostrar en pantalla inmediatamente
+            const card = createReviewCard(name, rating, text);
+            reviewsContainer.insertBefore(card, reviewsContainer.firstChild);
+
+            // Guardar en LocalStorage
+            const saved = localStorage.getItem(STORAGE_KEY);
+            const reviews = saved ? JSON.parse(saved) : [];
+            reviews.push({name, rating, text});
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(reviews));
+
+            // Limpiar form y agradecer
+            reviewForm.reset();
+            alert('¡Gracias por tu reseña! Significa mucho para nosotros.');
+        });
     }
 });

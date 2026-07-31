@@ -161,6 +161,41 @@
         </div>
     </section>
 
+    <!-- Reseñas / Testimonios -->
+    <section class="section-padding bg-dark text-light" id="resenas">
+        <div class="container">
+            <span class="subtitle text-center">Testimonios</span>
+            <h2 class="text-center">Lo que dicen nuestras clientas</h2>
+            
+            <div class="review-form-container">
+                <h3>Déjanos tu reseña</h3>
+                <form id="reviewForm" class="review-form">
+                    <input type="text" id="reviewName" placeholder="Tu nombre" required>
+                    <select id="reviewRating" required style="color: #fff;">
+                        <option value="5">⭐⭐⭐⭐⭐ (5 Estrellas)</option>
+                        <option value="4">⭐⭐⭐⭐ (4 Estrellas)</option>
+                        <option value="3">⭐⭐⭐ (3 Estrellas)</option>
+                        <option value="2">⭐⭐ (2 Estrellas)</option>
+                        <option value="1">⭐ (1 Estrella)</option>
+                    </select>
+                    <textarea id="reviewText" rows="3" placeholder="Cuéntanos tu experiencia..." required></textarea>
+                    <button type="submit" class="btn-primary">Publicar Reseña</button>
+                </form>
+            </div>
+
+            <div class="reviews-grid" id="reviewsContainer">
+                <!-- Reseña fija de ejemplo -->
+                <div class="review-card">
+                    <div class="review-header">
+                        <span class="review-name">Ana L.</span>
+                        <span class="review-stars">⭐⭐⭐⭐⭐</span>
+                    </div>
+                    <p class="review-text">"El mejor estudio de uñas. Me encantó la atención y el diseño duró intacto por semanas. La vibra del lugar es súper premium."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Contacto / Footer -->
     <footer class="footer section-padding" id="contacto">
         <div class="container footer-grid">
