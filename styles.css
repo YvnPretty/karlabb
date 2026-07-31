@@ -398,6 +398,23 @@ ul {
     color: white;
 }
 
+.btn-instagram {
+    display: inline-flex;
+    align-items: center;
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius-sm);
+    font-weight: 500;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.btn-instagram:hover {
+    opacity: 0.9;
+    color: white;
+}
+
 .footer-bottom {
     font-size: 0.875rem;
     color: #999;
@@ -405,14 +422,11 @@ ul {
     padding-top: var(--spacing-md);
 }
 
-/* Botón Flotante de WhatsApp */
-.float-ws {
+/* Botones Flotantes */
+.float-btn {
     position: fixed;
     width: 60px;
     height: 60px;
-    bottom: 40px;
-    right: 40px;
-    background-color: #25d366;
     color: #FFF;
     border-radius: 50px;
     text-align: center;
@@ -425,7 +439,21 @@ ul {
     transition: transform 0.3s ease;
 }
 
-.float-ws:hover {
+.float-ws {
+    bottom: 40px;
+    right: 40px;
+    background-color: #25d366;
+}
+
+.float-ig {
+    bottom: 110px; /* Colocado encima del botón de whatsapp si estuvieran en el mismo lado, pero lo pondré a la izquierda para balancear */
+    right: 40px; /* Cambiado a izquierda (left: 40px) para balancear la vista */
+    left: 40px;
+    right: auto;
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+}
+
+.float-btn:hover {
     transform: scale(1.1);
 }
 
