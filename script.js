@@ -353,3 +353,44 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// --- Lógica del Botón Mágico (Barniz de Uñas) ---
+document.addEventListener('DOMContentLoaded', () => {
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    const themeIcon = document.getElementById('themeIcon');
+    const body = document.body;
+    const THEME_KEY = 'karillusion_theme';
+
+    function setTheme(theme) {
+        if (theme === 'dark') {
+            body.classList.add('dark-theme');
+            if(themeIcon) themeIcon.src = 'assets/polish_dark.png';
+        } else {
+            body.classList.remove('dark-theme');
+            if(themeIcon) themeIcon.src = 'assets/polish_light.png';
+        }
+        localStorage.setItem(THEME_KEY, theme);
+    }
+
+    // Inicializar
+    const savedTheme = localStorage.getItem(THEME_KEY) || 'light';
+    setTheme(savedTheme);
+
+    // Evento Click
+    if(themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = body.classList.contains('dark-theme') ? 'dark' : 'light';
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            // Animación de rebote al hacer click
+            themeIcon.style.transform = 'scale(0.8)';
+            setTimeout(() => {
+                setTheme(newTheme);
+                themeIcon.style.transform = 'scale(1.2) rotate(-10deg)';
+                setTimeout(() => {
+                    themeIcon.style.transform = '';
+                }, 200);
+            }, 150);
+        });
+    }
+});

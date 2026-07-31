@@ -2,14 +2,18 @@
    Variables y Configuración Base
    ========================================================================== */
    :root {
-    --color-bg-primary: #252222; /* Carbón suave oscuro (Soft Dark) */
-    --color-bg-secondary: #302C2C; /* Tono oscuro ligeramente más claro para tarjetas */
-    --color-text-primary: #FCFBFA; /* Texto claro de alto contraste */
-    --color-text-secondary: #D5D1CE; /* Texto secundario gris claro */
-    --color-accent: #E5B2B8; /* Rose Gold más brillante para resaltar en fondo oscuro */
-    --color-accent-hover: #C9969C;
+    /* --- TEMA CLARO --- */
+    --color-bg-primary: #FCFBFA; /* Blanco hueso / Crema */
+    --color-bg-secondary: #F6F3F2; /* Ligero tono piedra/taupe */
+    --color-text-primary: #2B2A29; /* Carbón profundo */
+    --color-text-secondary: #7A7571; /* Gris cálido */
+    --color-accent: #C4969C; /* Rose Gold */
+    --color-accent-hover: #A87B81;
     --color-white: #ffffff;
-    --color-card-bg: rgba(48, 44, 44, 0.8);
+    --color-card-bg: #ffffff;
+    --navbar-bg: rgba(252, 251, 250, 0.7);
+    --border-color: rgba(0,0,0,0.05);
+    --input-bg: transparent;
     
     /* Tipografía Gama Plus */
     --font-heading: 'Playfair Display', serif;
@@ -30,6 +34,21 @@
     
     /* Transiciones */
     --transition-fast: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+body.dark-theme {
+    /* --- TEMA OSCURO --- */
+    --color-bg-primary: #252222; /* Carbón suave oscuro (Soft Dark) */
+    --color-bg-secondary: #302C2C; /* Tono oscuro ligeramente más claro para tarjetas */
+    --color-text-primary: #FCFBFA; /* Texto claro de alto contraste */
+    --color-text-secondary: #D5D1CE; /* Texto secundario gris claro */
+    --color-accent: #E5B2B8; /* Rose Gold más brillante para resaltar en fondo oscuro */
+    --color-accent-hover: #C9969C;
+    --color-white: #1a1a1a;
+    --color-card-bg: rgba(48, 44, 44, 0.8);
+    --navbar-bg: rgba(37, 34, 34, 0.7);
+    --border-color: rgba(255,255,255,0.05);
+    --input-bg: rgba(0,0,0,0.2);
 }
 
 /* Reseteo Básico */
@@ -171,12 +190,12 @@ ul {
     top: 0;
     left: 0;
     width: 100%;
-    background-color: rgba(37, 34, 34, 0.7); /* Oscuro translúcido */
+    background-color: var(--navbar-bg);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     z-index: 1000;
-    border-bottom: 1px solid rgba(0,0,0,0.03);
-    transition: padding var(--transition-fast);
+    border-bottom: 1px solid var(--border-color);
+    transition: padding var(--transition-fast), background-color var(--transition-fast);
 }
 
 .footer-content {
@@ -413,7 +432,7 @@ ul {
    ========================================================================== */
 .footer {
     background-color: var(--color-bg-secondary);
-    border-top: 1px solid rgba(255,255,255,0.05);
+    border-top: 1px solid var(--border-color);
 }
 
 .footer-grid {
@@ -684,7 +703,7 @@ ul {
     padding: var(--spacing-md);
     border-radius: var(--border-radius-lg);
     box-shadow: var(--shadow-soft);
-    border: 1px solid rgba(255,255,255,0.05);
+    border: 1px solid var(--border-color);
 }
 .review-header {
     display: flex;
@@ -713,7 +732,7 @@ ul {
     padding: var(--spacing-md);
     border-radius: var(--border-radius-lg);
     margin-bottom: var(--spacing-md);
-    border: 1px solid rgba(255,255,255,0.05);
+    border: 1px solid var(--border-color);
 }
 .review-form-container h3 {
     margin-bottom: 1.5rem;
@@ -728,8 +747,8 @@ ul {
 .review-form select {
     width: 100%;
     padding: 1rem;
-    background: rgba(0,0,0,0.2);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: var(--input-bg);
+    border: 1px solid var(--border-color);
     color: var(--color-text-primary);
     border-radius: var(--border-radius-md);
     font-family: var(--font-body);
@@ -743,4 +762,40 @@ ul {
 .review-form button {
     cursor: pointer;
     align-self: flex-start;
+}
+
+/* --- Botón Magico (Barniz) para Tema --- */
+.theme-toggle {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 60px;
+    height: 60px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 100;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.theme-toggle img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.2));
+    transition: transform 0.4s ease, filter 0.4s ease;
+}
+.theme-toggle:hover img {
+    transform: scale(1.15) rotate(-10deg);
+    filter: drop-shadow(0 15px 20px rgba(0,0,0,0.3));
+}
+@media (min-width: 768px) {
+    .theme-toggle {
+        bottom: 40px;
+        left: 40px;
+        width: 80px;
+        height: 80px;
+    }
 }
