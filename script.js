@@ -105,18 +105,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const ctx = canvas.getContext('2d');
         let width, height;
         let particles = [];
-        
-        // Cargar SVG estéticos (minimalistas y finos)
-        const svgNail = 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.5"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/><path d="M12 6c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"/></svg>');
-        const svgSparkle = 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1"><path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/></svg>');
-        const svgDrop = 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.5"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>');
-        
-        const images = [];
-        [svgNail, svgSparkle, svgDrop].forEach(src => {
-            const img = new Image();
-            img.src = src;
-            images.push(img);
-        });
 
         function resize() {
             width = canvas.width = window.innerWidth;
@@ -139,14 +127,14 @@ document.addEventListener('DOMContentLoaded', () => {
             constructor() {
                 this.x = Math.random() * width;
                 this.y = Math.random() * height;
-                this.size = Math.random() * 15 + 10;
+                this.size = Math.random() * 8 + 4; // Tamaño
                 this.baseX = this.x;
                 this.baseY = this.y;
                 this.density = (Math.random() * 20) + 1;
-                this.img = images[Math.floor(Math.random() * images.length)];
+                this.type = Math.floor(Math.random() * 3); // 0: gota, 1: destello, 2: círculo
                 this.angle = Math.random() * 360;
-                this.rotationSpeed = (Math.random() - 0.5);
-                this.opacity = Math.random() * 0.4 + 0.1; // Sutil y fino
+                this.rotationSpeed = (Math.random() - 0.5) * 2;
+                this.opacity = Math.random() * 0.5 + 0.3; // Más opacidad para ser visible
             }
 
             draw() {
@@ -154,8 +142,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 ctx.globalAlpha = this.opacity;
                 ctx.translate(this.x, this.y);
                 ctx.rotate(this.angle * Math.PI / 180);
-                if (this.img.complete) {
-                    ctx.drawImage(this.img, -this.size / 2, -this.size / 2, this.size, this.size);
+                ctx.fillStyle = '#d4af37'; // Color dorado de la marca
+                
+                ctx.beginPath();
+                if (this.type === 0) {
+                    // Gota invertida (Spa)
+                    ctx.moveTo(0, -this.size);
+                    ctx.bezierCurveTo(this.size, 0, this.size, this.size, 0, this.size);
+                    ctx.bezierCurveTo(-this.size, this.size, -this.size, 0, 0, -this.size);
+                    ctx.fill();
+                } else if (this.type === 1) {
+                    // Destello / Estrella (Fino)
+                    ctx.moveTo(0, -this.size);
+                    ctx.quadraticCurveTo(0, 0, this.size, 0);
+                    ctx.quadraticCurveTo(0, 0, 0, this.size);
+                    ctx.quadraticCurveTo(0, 0, -this.size, 0);
+                    ctx.quadraticCurveTo(0, 0, 0, -this.size);
+                    ctx.fill();
+                } else {
+                    // Círculo / Burbuja
+                    ctx.arc(0, 0, this.size / 1.5, 0, Math.PI * 2);
+                    ctx.fill();
                 }
                 ctx.restore();
             }
@@ -163,13 +170,12 @@ document.addEventListener('DOMContentLoaded', () => {
             update() {
                 this.angle += this.rotationSpeed;
                 
-                // Efecto "agua" al pasar el cursor
                 let dx = mouse.x - this.x;
                 let dy = mouse.y - this.y;
                 let distance = Math.sqrt(dx * dx + dy * dy);
                 let forceDirectionX = dx / distance;
                 let forceDirectionY = dy / distance;
-                let maxDistance = 150;
+                let maxDistance = 200; // Radio de interacción más grande
                 let force = (maxDistance - distance) / maxDistance;
                 let directionX = forceDirectionX * force * this.density;
                 let directionY = forceDirectionY * force * this.density;
@@ -180,16 +186,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     if (this.x !== this.baseX) {
                         let dx = this.x - this.baseX;
-                        this.x -= dx / 50;
+                        this.x -= dx / 20;
                     }
                     if (this.y !== this.baseY) {
                         let dy = this.y - this.baseY;
-                        this.y -= dy / 50;
+                        this.y -= dy / 20;
                     }
                 }
 
-                // Flotar hacia arriba suavemente
-                this.baseY -= 0.3;
+                this.baseY -= 0.5; // Flotan hacia arriba más rápido
                 if (this.baseY < -50) {
                     this.baseY = height + 50;
                     this.baseX = Math.random() * width;
@@ -201,7 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function init() {
             particles = [];
-            let numberOfParticles = (width * height) / 12000;
+            let numberOfParticles = (width * height) / 8000; // Más densidad de partículas
             for (let i = 0; i < numberOfParticles; i++) {
                 particles.push(new Particle());
             }
