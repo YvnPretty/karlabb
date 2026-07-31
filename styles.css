@@ -401,7 +401,7 @@ ul {
 .btn-instagram {
     display: inline-flex;
     align-items: center;
-    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    background-color: #E1306C;
     color: white;
     padding: 0.5rem 1rem;
     border-radius: var(--border-radius-sm);
@@ -411,7 +411,7 @@ ul {
 }
 
 .btn-instagram:hover {
-    opacity: 0.9;
+    background-color: #C13584;
     color: white;
 }
 
@@ -450,7 +450,7 @@ ul {
     right: 40px; /* Cambiado a izquierda (left: 40px) para balancear la vista */
     left: 40px;
     right: auto;
-    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    background-color: #E1306C;
 }
 
 .float-btn:hover {
