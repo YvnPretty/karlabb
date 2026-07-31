@@ -254,6 +254,16 @@ ul {
     overflow: hidden;
 }
 
+#hero-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none; /* Dejamos que los clics pasen al contenido */
+}
+
 /* Pseudo-elemento para animar el fondo del Hero (Slow Zoom) */
 .hero::before {
     content: '';
