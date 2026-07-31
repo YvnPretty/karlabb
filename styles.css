@@ -18,6 +18,7 @@
     /* Tipografía Gama Plus */
     --font-heading: 'Playfair Display', serif;
     --font-body: 'Montserrat', sans-serif;
+    --font-script: 'Great Vibes', cursive;
     
     /* Espaciado */
     --spacing-sm: 1.5rem;
@@ -722,8 +723,11 @@ ul {
     letter-spacing: 2px;
 }
 .review-text {
-    font-style: italic;
+    font-family: var(--font-script);
+    font-size: 1.8rem;
+    line-height: 1.4;
     color: var(--color-text-secondary);
+    padding: 10px 0;
 }
 
 /* Formulario de Reseñas */
