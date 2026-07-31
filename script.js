@@ -136,8 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     this.baseX = this.x;
                     this.baseY = this.y;
                     this.density = (Math.random() * 15) + 5;
-                    const emojis = ['💅', '💖', '✨', '🎀', '🌸'];
-                    this.emoji = emojis[Math.floor(Math.random() * emojis.length)];
+                    this.imageIndex = Math.floor(Math.random() * 5); // 0 a 4
                     this.angle = Math.random() * 360; // Para rotación
                     this.rotationSpeed = (Math.random() - 0.5) * 2;
                     this.opacity = Math.random() * 0.5 + 0.3; // 0.3 a 0.8
@@ -148,12 +147,28 @@ document.addEventListener('DOMContentLoaded', () => {
                     ctx.globalAlpha = this.opacity;
                     ctx.translate(this.x, this.y);
                     ctx.rotate(this.angle * Math.PI / 180);
-                    ctx.fillStyle = '#f4a6b1'; // Rosa pastel fuerte (tema bebé)
                     
-                    ctx.font = `${this.size * 2.5}px "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", Arial, sans-serif`;
-                    ctx.textAlign = 'center';
-                    ctx.textBaseline = 'middle';
-                    ctx.fillText(this.emoji, 0, 0);
+                    // Dibujar imagen real en lugar de emoji
+                    if (window.particleImages && window.particleImages[this.imageIndex] && window.particleImages[this.imageIndex].complete) {
+                        const img = window.particleImages[this.imageIndex];
+                        // Dibujarla como un cuadradito/foto flotante
+                        const renderSize = this.size * 3;
+                        
+                        // Sombra y borde estilo polaroid
+                        ctx.shadowColor = 'rgba(0,0,0,0.2)';
+                        ctx.shadowBlur = 10;
+                        ctx.fillStyle = '#fff';
+                        ctx.fillRect(-renderSize/2 - 2, -renderSize/2 - 2, renderSize + 4, renderSize + 4);
+                        
+                        ctx.shadowColor = 'transparent'; // quitar sombra para la imagen
+                        ctx.drawImage(img, -renderSize/2, -renderSize/2, renderSize, renderSize);
+                    } else {
+                        // Fallback temporal si la imagen no ha cargado
+                        ctx.fillStyle = '#f4a6b1';
+                        ctx.beginPath();
+                        ctx.arc(0, 0, this.size, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
 
                     ctx.restore();
                 }
@@ -196,10 +211,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
+            // Precargar imágenes para las partículas
+            window.particleImages = [];
+            const imageUrls = [
+                'assets/galeria-1.jpg',
+                'assets/galeria-2.jpg',
+                'assets/galeria-3.jpg',
+                'assets/galeria-4.jpg',
+                'assets/galeria-5.jpg'
+            ];
+            imageUrls.forEach(url => {
+                const img = new Image();
+                img.src = url;
+                window.particleImages.push(img);
+            });
+
             function init() {
                 resize(); // Asegurar tamaño justo antes de crear partículas
                 particles = [];
-                let numberOfParticles = Math.min((width * height) / 10000, 150); // Límite seguro
+                let numberOfParticles = Math.min((width * height) / 12000, 40); // Menos partículas porque son fotos reales
                 for (let i = 0; i < numberOfParticles; i++) {
                     particles.push(new Particle());
                 }
