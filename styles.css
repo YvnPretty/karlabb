@@ -2,15 +2,13 @@
    Variables y Configuración Base
    ========================================================================== */
    :root {
-    /* Paleta de Colores (Estética Fina / Clean) */
-    --color-bg-primary: #fcfbf9;     /* Blanco roto cálido */
-    --color-bg-secondary: #f4f1ea;   /* Beige muy suave */
-    --color-bg-dark: #2a2826;        /* Carbón suave */
-    --color-text-main: #33312e;      /* Gris oscuro para legibilidad */
-    --color-text-light: #706c64;     /* Gris medio para textos secundarios */
-    --color-accent: #d4af37;         /* Tono dorado suave/elegante */
-    --color-accent-hover: #b5952f;
-    --color-white: #ffffff;
+    --color-bg-primary: #110f0d;
+    --color-bg-secondary: #2a2520;
+    --color-text-primary: #ffffff;
+    --color-text-secondary: #e0dcd3;
+    --color-accent: #d4af37;
+    --color-accent-hover: #b8962d;
+    --color-white: #1f1c18;
     
     /* Tipografía */
     --font-heading: 'Playfair Display', serif;
@@ -42,15 +40,16 @@
 
 html {
     scroll-behavior: smooth;
-    font-size: 16px;
+    background: linear-gradient(135deg, var(--color-bg-secondary) 0%, var(--color-bg-primary) 100%);
+    background-attachment: fixed;
 }
 
 body {
     font-family: var(--font-body);
-    background-color: var(--color-bg-primary);
-    color: var(--color-text-main);
+    color: var(--color-text-primary);
     line-height: 1.6;
     overflow-x: hidden;
+    background: transparent;
 }
 
 /* Tipografía Básica */
@@ -59,7 +58,7 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 400;
     line-height: 1.2;
     margin-bottom: var(--spacing-sm);
-    color: var(--color-text-main);
+    color: var(--color-text-primary);
 }
 
 h1 { font-size: clamp(2.5rem, 5vw, 4rem); }
@@ -68,7 +67,7 @@ h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
 
 p {
     margin-bottom: var(--spacing-sm);
-    color: var(--color-text-light);
+    color: var(--color-text-secondary);
 }
 
 a {
@@ -125,8 +124,8 @@ ul {
 /* Botones */
 .btn-primary {
     display: inline-block;
-    background-color: var(--color-text-main);
-    color: var(--color-white);
+    background-color: var(--color-accent);
+    color: var(--color-bg-primary);
     padding: 1rem 2rem;
     border-radius: var(--border-radius-sm);
     font-family: var(--font-body);
@@ -134,13 +133,13 @@ ul {
     text-transform: uppercase;
     letter-spacing: 1px;
     font-size: 0.875rem;
-    border: 1px solid var(--color-text-main);
+    border: 1px solid var(--color-accent);
     transition: all var(--transition-fast);
 }
 
 .btn-primary:hover {
     background-color: transparent;
-    color: var(--color-text-main);
+    color: var(--color-accent);
 }
 
 /* ==========================================================================
@@ -151,11 +150,22 @@ ul {
     top: 0;
     left: 0;
     width: 100%;
-    background-color: rgba(252, 251, 249, 0.95);
+    background-color: rgba(17, 15, 13, 0.95);
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     z-index: 1000;
     border-bottom: 1px solid rgba(0,0,0,0.05);
     transition: padding var(--transition-fast);
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    color: var(--color-text-secondary);
+    background-color: var(--color-bg-primary);
 }
 
 .nav-container {
@@ -254,24 +264,14 @@ ul {
     overflow: hidden;
 }
 
-#hero-canvas {
-    position: absolute;
+#bg-canvas {
+    position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 2; /* Sobre el before, debajo del content */
-    pointer-events: none; /* Dejamos que los clics pasen al contenido */
-}
-
-/* Pseudo-elemento para animar el fondo del Hero (Slow Zoom) */
-.hero::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: linear-gradient(135deg, var(--color-bg-secondary) 0%, var(--color-bg-primary) 100%);
-    z-index: 1;
-    animation: slowZoom 20s infinite alternate linear;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none;
 }
 
 .hero-content {

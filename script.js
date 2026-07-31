@@ -112,26 +112,20 @@ document.addEventListener('DOMContentLoaded', () => {
             let particles = [];
 
             function resize() {
-                const hero = document.querySelector('.hero');
                 width = canvas.width = window.innerWidth;
-                height = canvas.height = hero ? hero.offsetHeight : window.innerHeight;
+                height = canvas.height = window.innerHeight;
             }
             window.addEventListener('resize', resize);
             resize(); // Llamada inicial
 
             let mouse = { x: -1000, y: -1000 };
             document.addEventListener('mousemove', (e) => {
-                const hero = document.querySelector('.hero');
-                if (!hero) return;
-                const rect = hero.getBoundingClientRect();
-                // Solo interactuar si el ratón está sobre el hero
-                if (e.clientY >= rect.top && e.clientY <= rect.bottom) {
-                    mouse.x = e.clientX;
-                    mouse.y = e.clientY - rect.top;
-                } else {
-                    mouse.x = -1000;
-                    mouse.y = -1000;
-                }
+                mouse.x = e.clientX;
+                mouse.y = e.clientY;
+            });
+            document.addEventListener('mouseleave', () => {
+                mouse.x = -1000;
+                mouse.y = -1000;
             });
 
             class Particle {
