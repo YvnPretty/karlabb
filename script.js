@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     this.baseX = this.x;
                     this.baseY = this.y;
                     this.density = (Math.random() * 15) + 5;
-                    this.imageIndex = Math.floor(Math.random() * 5); // 0 a 4
+                    this.imageIndex = Math.floor(Math.random() * 3); // 0, 1 o 2 (3 charms)
                     this.angle = Math.random() * 360; // Para rotación
                     this.rotationSpeed = (Math.random() - 0.5) * 2;
                     this.opacity = Math.random() * 0.5 + 0.3; // 0.3 a 0.8
@@ -148,19 +148,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     ctx.translate(this.x, this.y);
                     ctx.rotate(this.angle * Math.PI / 180);
                     
-                    // Dibujar imagen real en lugar de emoji
+                    // Dibujar charm real transparente
                     if (window.particleImages && window.particleImages[this.imageIndex] && window.particleImages[this.imageIndex].complete) {
                         const img = window.particleImages[this.imageIndex];
-                        // Dibujarla como un cuadradito/foto flotante
-                        const renderSize = this.size * 3;
+                        // Tamaño apropiado para que se vean como charms delicados
+                        const renderSize = this.size * 2.5;
                         
-                        // Sombra y borde estilo polaroid
-                        ctx.shadowColor = 'rgba(0,0,0,0.2)';
-                        ctx.shadowBlur = 10;
-                        ctx.fillStyle = '#fff';
-                        ctx.fillRect(-renderSize/2 - 2, -renderSize/2 - 2, renderSize + 4, renderSize + 4);
+                        // Sombra ligera para darle profundidad al charm flotante
+                        ctx.shadowColor = 'rgba(0,0,0,0.1)';
+                        ctx.shadowBlur = 5;
+                        ctx.shadowOffsetY = 3;
                         
-                        ctx.shadowColor = 'transparent'; // quitar sombra para la imagen
                         ctx.drawImage(img, -renderSize/2, -renderSize/2, renderSize, renderSize);
                     } else {
                         // Fallback temporal si la imagen no ha cargado
@@ -211,14 +209,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            // Precargar imágenes para las partículas
+            // Precargar charms transparentes reales
             window.particleImages = [];
             const imageUrls = [
-                'assets/galeria-1.jpg',
-                'assets/galeria-2.jpg',
-                'assets/galeria-3.jpg',
-                'assets/galeria-4.jpg',
-                'assets/galeria-5.jpg'
+                'assets/charm1.png', // Uña press on
+                'assets/charm2.png', // Frasco de esmalte
+                'assets/charm3.png'  // Moño kawaii
             ];
             imageUrls.forEach(url => {
                 const img = new Image();
