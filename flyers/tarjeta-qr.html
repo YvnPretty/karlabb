@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto y QR - Kar Illusion Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="flyer.css">
+</head>
+<body class="flyer-body">
+    <!-- Canvas de Fondo (Toda la página) -->
+    <canvas id="bg-canvas"></canvas>
+
+    <div class="flyer-card">
+        <!-- Logo -->
+        <div class="flyer-logo">
+            Kar Illusion<br><span>Studio</span>
+        </div>
+        
+        <p class="flyer-info">
+            Escanea nuestro QR para<br>conocer nuestros servicios
+        </p>
+
+        <!-- QR Code -->
+        <div class="qr-container">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&color=f4a6b1&data=https://www.instagram.com/kar_illusion.studio" alt="Código QR Instagram">
+            <span class="qr-username">@KAR_ILLUSION.STUDIO</span>
+        </div>
+
+        <p class="flyer-info large" style="text-transform: uppercase;">
+            ESTUDIO DE ILUSIÓN | KAR
+        </p>
+        
+        <p class="flyer-info" style="margin-top: 1.5rem;">
+            Calle Alhelí, san Miguel,<br>
+            San Andrés Mixquic.
+        </p>
+        
+        <p class="flyer-info large" style="margin-top: 1.5rem;">
+            55-37-43-41-23
+        </p>
+    </div>
+
+    <script src="../script.js"></script>
+</body>
+</html>
