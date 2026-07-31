@@ -136,20 +136,50 @@ document.addEventListener('DOMContentLoaded', () => {
                     this.baseX = this.x;
                     this.baseY = this.y;
                     this.density = (Math.random() * 15) + 5;
+                    this.type = Math.floor(Math.random() * 3); // 0: osito, 1: corazon, 2: burbuja
+                    this.angle = Math.random() * 360; // Para rotación
+                    this.rotationSpeed = (Math.random() - 0.5) * 2;
                     this.opacity = Math.random() * 0.5 + 0.3; // 0.3 a 0.8
                 }
 
                 draw() {
                     ctx.save();
                     ctx.globalAlpha = this.opacity;
-                    ctx.fillStyle = '#d4af37'; // Dorado sólido
+                    ctx.translate(this.x, this.y);
+                    ctx.rotate(this.angle * Math.PI / 180);
+                    ctx.fillStyle = '#f4a6b1'; // Rosa pastel fuerte (tema bebé)
+                    
                     ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                    ctx.fill();
+                    if (this.type === 0) {
+                        // Figura: Osito (Teddy Bear Head)
+                        ctx.arc(0, 0, this.size, 0, Math.PI * 2); // Cabeza
+                        ctx.fill();
+                        ctx.beginPath();
+                        ctx.arc(-this.size * 0.8, -this.size * 0.8, this.size * 0.5, 0, Math.PI * 2); // Oreja izq
+                        ctx.fill();
+                        ctx.beginPath();
+                        ctx.arc(this.size * 0.8, -this.size * 0.8, this.size * 0.5, 0, Math.PI * 2); // Oreja der
+                        ctx.fill();
+                    } else if (this.type === 1) {
+                        // Figura: Corazón (Heart)
+                        let d = this.size * 2;
+                        ctx.moveTo(0, d / 4);
+                        ctx.bezierCurveTo(0, 0, -d / 2, 0, -d / 2, d / 4);
+                        ctx.bezierCurveTo(-d / 2, d / 2, 0, d * 0.75, 0, d);
+                        ctx.bezierCurveTo(0, d * 0.75, d / 2, d / 2, d / 2, d / 4);
+                        ctx.bezierCurveTo(d / 2, 0, 0, 0, 0, d / 4);
+                        ctx.fill();
+                    } else {
+                        // Círculo / Burbuja suave
+                        ctx.arc(0, 0, this.size, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
                     ctx.restore();
                 }
 
                 update() {
+                    this.angle += this.rotationSpeed; // Actualizar rotación
+                    
                     let dx = mouse.x - this.x;
                     let dy = mouse.y - this.y;
                     let distance = Math.sqrt(dx * dx + dy * dy);

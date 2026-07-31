@@ -2,13 +2,13 @@
    Variables y Configuración Base
    ========================================================================== */
    :root {
-    --color-bg-primary: #110f0d;
-    --color-bg-secondary: #2a2520;
-    --color-text-primary: #ffffff;
-    --color-text-secondary: #e0dcd3;
-    --color-accent: #d4af37;
-    --color-accent-hover: #b8962d;
-    --color-white: #1f1c18;
+    --color-bg-primary: #faeeee; /* Rosa pastel muy claro (bb.jpg) */
+    --color-bg-secondary: #ffffff; /* Blanco */
+    --color-text-primary: #5c4b51; /* Marrón/púrpura oscuro */
+    --color-text-secondary: #8c7a80;
+    --color-accent: #f4a6b1; /* Rosa pastel vibrante */
+    --color-accent-hover: #e08b98;
+    --color-white: #ffffff;
     
     /* Tipografía */
     --font-heading: 'Playfair Display', serif;
@@ -61,7 +61,19 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--color-text-primary);
 }
 
-h1 { font-size: clamp(2.5rem, 5vw, 4rem); }
+.hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-text-primary);
+}
+
+.hero p {
+    font-size: 1.2rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-md);
+    font-family: 'Inter', sans-serif;
+}
+
 h2 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: var(--spacing-md); }
 h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
 
@@ -150,7 +162,7 @@ ul {
     top: 0;
     left: 0;
     width: 100%;
-    background-color: rgba(17, 15, 13, 0.95);
+    background-color: rgba(250, 238, 238, 0.95);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     z-index: 1000;
