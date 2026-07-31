@@ -132,11 +132,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 constructor() {
                     this.x = Math.random() * width;
                     this.y = Math.random() * height;
-                    this.size = Math.random() * 12 + 6; // 6 a 18px (Garantizado visible)
+                    this.size = Math.random() * 18 + 12; // Más grande (12 a 30px base)
                     this.baseX = this.x;
                     this.baseY = this.y;
                     this.density = (Math.random() * 15) + 5;
-                    this.imageIndex = Math.floor(Math.random() * 3); // 0, 1 o 2 (3 charms)
+                    // Se elegirá dinámicamente según el tamaño del array precargado
+                    this.imageIndex = Math.floor(Math.random() * 8); // 3 charms + 5 fotos = 8
                     this.angle = Math.random() * 360; // Para rotación
                     this.rotationSpeed = (Math.random() - 0.5) * 2;
                     this.opacity = Math.random() * 0.5 + 0.3; // 0.3 a 0.8
@@ -148,16 +149,25 @@ document.addEventListener('DOMContentLoaded', () => {
                     ctx.translate(this.x, this.y);
                     ctx.rotate(this.angle * Math.PI / 180);
                     
-                    // Dibujar charm real transparente
+                    // Dibujar imagen (Foto o Charm)
                     if (window.particleImages && window.particleImages[this.imageIndex] && window.particleImages[this.imageIndex].complete) {
                         const img = window.particleImages[this.imageIndex];
-                        // Tamaño apropiado para que se vean como charms delicados
+                        const isPolaroid = img.src.includes('galeria-');
                         const renderSize = this.size * 2.5;
                         
-                        // Sombra ligera para darle profundidad al charm flotante
-                        ctx.shadowColor = 'rgba(0,0,0,0.1)';
-                        ctx.shadowBlur = 5;
-                        ctx.shadowOffsetY = 3;
+                        if (isPolaroid) {
+                            // Estilo polaroid para las fotos
+                            ctx.shadowColor = 'rgba(0,0,0,0.2)';
+                            ctx.shadowBlur = 10;
+                            ctx.fillStyle = '#fff';
+                            ctx.fillRect(-renderSize/2 - 2, -renderSize/2 - 2, renderSize + 4, renderSize + 4);
+                            ctx.shadowColor = 'transparent'; // quitar sombra interna
+                        } else {
+                            // Estilo suelto para los charms transparentes
+                            ctx.shadowColor = 'rgba(0,0,0,0.15)';
+                            ctx.shadowBlur = 6;
+                            ctx.shadowOffsetY = 4;
+                        }
                         
                         ctx.drawImage(img, -renderSize/2, -renderSize/2, renderSize, renderSize);
                     } else {
@@ -209,12 +219,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            // Precargar charms transparentes reales
+            // Precargar todas las imágenes (Charms y Fotos)
             window.particleImages = [];
             const imageUrls = [
                 'assets/charm1.png', // Uña press on
                 'assets/charm2.png', // Frasco de esmalte
-                'assets/charm3.png'  // Moño kawaii
+                'assets/charm3.png', // Moño kawaii
+                'assets/galeria-1.jpg',
+                'assets/galeria-2.jpg',
+                'assets/galeria-3.jpg',
+                'assets/galeria-4.jpg',
+                'assets/galeria-5.jpg'
             ];
             imageUrls.forEach(url => {
                 const img = new Image();
