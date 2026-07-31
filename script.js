@@ -103,131 +103,119 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- CANVAS INTERACTIVO (Fondo Hero - Efecto Agua/Partículas) ---
-    const canvas = document.getElementById('hero-canvas');
-    if (canvas) {
-        const ctx = canvas.getContext('2d');
-        let width, height;
-        let particles = [];
+    // --- CANVAS INTERACTIVO (Fondo Hero) ---
+    try {
+        const canvas = document.getElementById('hero-canvas');
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            let particles = [];
 
-        function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = document.querySelector('.hero').offsetHeight;
-        }
-        window.addEventListener('resize', resize);
-        resize();
-
-        let mouse = { x: -1000, y: -1000 };
-        document.querySelector('.hero').addEventListener('mousemove', (e) => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY - document.querySelector('.hero').getBoundingClientRect().top;
-        });
-        document.querySelector('.hero').addEventListener('mouseleave', () => {
-            mouse.x = -1000;
-            mouse.y = -1000;
-        });
-
-        class Particle {
-            constructor() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
-                this.size = Math.random() * 16 + 8; // Tamaño más grande (8 a 24) para que se vean sí o sí
-                this.baseX = this.x;
-                this.baseY = this.y;
-                this.density = (Math.random() * 20) + 1;
-                this.type = Math.floor(Math.random() * 3); // 0: gota, 1: destello, 2: círculo
-                this.angle = Math.random() * 360;
-                this.rotationSpeed = (Math.random() - 0.5) * 2;
-                this.opacity = Math.random() * 0.5 + 0.3; // Más opacidad para ser visible
+            function resize() {
+                const hero = document.querySelector('.hero');
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = hero ? hero.offsetHeight : window.innerHeight;
             }
+            window.addEventListener('resize', resize);
+            resize(); // Llamada inicial
 
-            draw() {
-                ctx.save();
-                ctx.globalAlpha = this.opacity;
-                ctx.translate(this.x, this.y);
-                ctx.rotate(this.angle * Math.PI / 180);
-                ctx.fillStyle = '#d4af37'; // Color dorado de la marca
-                
-                ctx.beginPath();
-                if (this.type === 0) {
-                    // Gota invertida (Spa)
-                    ctx.moveTo(0, -this.size);
-                    ctx.bezierCurveTo(this.size, 0, this.size, this.size, 0, this.size);
-                    ctx.bezierCurveTo(-this.size, this.size, -this.size, 0, 0, -this.size);
-                    ctx.fill();
-                } else if (this.type === 1) {
-                    // Destello / Estrella (Fino)
-                    ctx.moveTo(0, -this.size);
-                    ctx.quadraticCurveTo(0, 0, this.size, 0);
-                    ctx.quadraticCurveTo(0, 0, 0, this.size);
-                    ctx.quadraticCurveTo(0, 0, -this.size, 0);
-                    ctx.quadraticCurveTo(0, 0, 0, -this.size);
-                    ctx.fill();
+            let mouse = { x: -1000, y: -1000 };
+            document.addEventListener('mousemove', (e) => {
+                const hero = document.querySelector('.hero');
+                if (!hero) return;
+                const rect = hero.getBoundingClientRect();
+                // Solo interactuar si el ratón está sobre el hero
+                if (e.clientY >= rect.top && e.clientY <= rect.bottom) {
+                    mouse.x = e.clientX;
+                    mouse.y = e.clientY - rect.top;
                 } else {
-                    // Círculo / Burbuja
-                    ctx.arc(0, 0, this.size / 1.5, 0, Math.PI * 2);
-                    ctx.fill();
+                    mouse.x = -1000;
+                    mouse.y = -1000;
                 }
-                ctx.restore();
-            }
+            });
 
-            update() {
-                this.angle += this.rotationSpeed;
-                
-                let dx = mouse.x - this.x;
-                let dy = mouse.y - this.y;
-                let distance = Math.sqrt(dx * dx + dy * dy);
-                let forceDirectionX = dx / distance;
-                let forceDirectionY = dy / distance;
-                let maxDistance = 200; // Radio de interacción más grande
-                let force = (maxDistance - distance) / maxDistance;
-                let directionX = forceDirectionX * force * this.density;
-                let directionY = forceDirectionY * force * this.density;
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * width;
+                    this.y = Math.random() * height;
+                    this.size = Math.random() * 12 + 6; // 6 a 18px (Garantizado visible)
+                    this.baseX = this.x;
+                    this.baseY = this.y;
+                    this.density = (Math.random() * 15) + 5;
+                    this.opacity = Math.random() * 0.5 + 0.3; // 0.3 a 0.8
+                }
 
-                if (distance < maxDistance) {
-                    this.x -= directionX;
-                    this.y -= directionY;
-                } else {
-                    if (this.x !== this.baseX) {
-                        let dx = this.x - this.baseX;
-                        this.x -= dx / 20;
+                draw() {
+                    ctx.save();
+                    ctx.globalAlpha = this.opacity;
+                    ctx.fillStyle = '#d4af37'; // Dorado sólido
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.restore();
+                }
+
+                update() {
+                    let dx = mouse.x - this.x;
+                    let dy = mouse.y - this.y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    let maxDistance = 250; // Gran radio de interacción
+                    
+                    if (distance < maxDistance) {
+                        let forceDirectionX = dx / distance;
+                        let forceDirectionY = dy / distance;
+                        let force = (maxDistance - distance) / maxDistance;
+                        let directionX = forceDirectionX * force * this.density;
+                        let directionY = forceDirectionY * force * this.density;
+                        
+                        this.x -= directionX;
+                        this.y -= directionY;
+                    } else {
+                        // Retorno suave a su trayectoria
+                        if (this.x !== this.baseX) {
+                            this.x -= (this.x - this.baseX) / 20;
+                        }
+                        if (this.y !== this.baseY) {
+                            this.y -= (this.y - this.baseY) / 20;
+                        }
                     }
-                    if (this.y !== this.baseY) {
-                        let dy = this.y - this.baseY;
-                        this.y -= dy / 20;
+
+                    // Flote constante hacia arriba
+                    this.baseY -= 1; // Más rápido para que sea obvio
+                    if (this.baseY < -50) {
+                        this.baseY = height + 50;
+                        this.baseX = Math.random() * width;
+                        this.x = this.baseX;
+                        this.y = this.baseY;
                     }
                 }
+            }
 
-                this.baseY -= 0.5; // Flotan hacia arriba más rápido
-                if (this.baseY < -50) {
-                    this.baseY = height + 50;
-                    this.baseX = Math.random() * width;
-                    this.x = this.baseX;
-                    this.y = this.baseY;
+            function init() {
+                resize(); // Asegurar tamaño justo antes de crear partículas
+                particles = [];
+                let numberOfParticles = Math.min((width * height) / 10000, 150); // Límite seguro
+                for (let i = 0; i < numberOfParticles; i++) {
+                    particles.push(new Particle());
                 }
             }
-        }
 
-        function init() {
-            particles = [];
-            let numberOfParticles = (width * height) / 8000; // Más densidad de partículas
-            for (let i = 0; i < numberOfParticles; i++) {
-                particles.push(new Particle());
+            function animate() {
+                ctx.clearRect(0, 0, width, height);
+                for (let i = 0; i < particles.length; i++) {
+                    particles[i].update();
+                    particles[i].draw();
+                }
+                requestAnimationFrame(animate);
             }
-        }
 
-        function animate() {
-            ctx.clearRect(0, 0, width, height);
-            for (let i = 0; i < particles.length; i++) {
-                particles[i].update();
-                particles[i].draw();
-            }
-            requestAnimationFrame(animate);
+            // Iniciar de forma segura
+            setTimeout(() => {
+                init();
+                animate();
+            }, 500); // Dar más tiempo al DOM/CSS para renderizar
         }
-
-        setTimeout(() => {
-            init();
-            animate();
-        }, 300);
+    } catch (e) {
+        console.error("Error en canvas interactivo:", e);
     }
 });
