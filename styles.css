@@ -478,7 +478,7 @@ ul {
     
     /* Botones Flotantes Desktop */
     .float-ws { bottom: 40px; right: 40px; }
-    .float-ig { bottom: 110px; right: auto; left: 40px; }
+    .float-ig { bottom: 110px; right: 40px; left: auto; }
 }
 
 @media (min-width: 1024px) {
