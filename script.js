@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     this.baseX = this.x;
                     this.baseY = this.y;
                     this.density = (Math.random() * 15) + 5;
-                    this.type = Math.floor(Math.random() * 3); // 0: osito, 1: corazon, 2: burbuja
+                    this.type = Math.floor(Math.random() * 4); // 0: bolita, 1: esmalte, 2: destello, 3: gota
                     this.angle = Math.random() * 360; // Para rotación
                     this.rotationSpeed = (Math.random() - 0.5) * 2;
                     this.opacity = Math.random() * 0.5 + 0.3; // 0.3 a 0.8
@@ -151,27 +151,30 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     ctx.beginPath();
                     if (this.type === 0) {
-                        // Figura: Osito (Teddy Bear Head)
-                        ctx.arc(0, 0, this.size, 0, Math.PI * 2); // Cabeza
-                        ctx.fill();
-                        ctx.beginPath();
-                        ctx.arc(-this.size * 0.8, -this.size * 0.8, this.size * 0.5, 0, Math.PI * 2); // Oreja izq
-                        ctx.fill();
-                        ctx.beginPath();
-                        ctx.arc(this.size * 0.8, -this.size * 0.8, this.size * 0.5, 0, Math.PI * 2); // Oreja der
+                        // Bolita / Círculo (Las favoritas)
+                        ctx.arc(0, 0, this.size, 0, Math.PI * 2);
                         ctx.fill();
                     } else if (this.type === 1) {
-                        // Figura: Corazón (Heart)
-                        let d = this.size * 2;
-                        ctx.moveTo(0, d / 4);
-                        ctx.bezierCurveTo(0, 0, -d / 2, 0, -d / 2, d / 4);
-                        ctx.bezierCurveTo(-d / 2, d / 2, 0, d * 0.75, 0, d);
-                        ctx.bezierCurveTo(0, d * 0.75, d / 2, d / 2, d / 2, d / 4);
-                        ctx.bezierCurveTo(d / 2, 0, 0, 0, 0, d / 4);
+                        // Frasco de Esmalte de Uñas
+                        let w = this.size * 1.2;
+                        let h = this.size * 1.2;
+                        ctx.rect(-w/2, 0, w, h); // Cuerpo del frasco
+                        ctx.rect(-w/4, -h*0.8, w/2, h*0.8); // Tapa
+                        ctx.fill();
+                    } else if (this.type === 2) {
+                        // Destello / Brillo de uña perfecta
+                        let d = this.size * 1.5;
+                        ctx.moveTo(0, -d);
+                        ctx.quadraticCurveTo(0, 0, d, 0);
+                        ctx.quadraticCurveTo(0, 0, 0, d);
+                        ctx.quadraticCurveTo(0, 0, -d, 0);
+                        ctx.quadraticCurveTo(0, 0, 0, -d);
                         ctx.fill();
                     } else {
-                        // Círculo / Burbuja suave
-                        ctx.arc(0, 0, this.size, 0, Math.PI * 2);
+                        // Gota de esmalte / spa
+                        ctx.moveTo(0, -this.size);
+                        ctx.bezierCurveTo(this.size, 0, this.size, this.size, 0, this.size);
+                        ctx.bezierCurveTo(-this.size, this.size, -this.size, 0, 0, -this.size);
                         ctx.fill();
                     }
                     ctx.restore();
