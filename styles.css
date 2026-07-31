@@ -260,7 +260,7 @@ ul {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1;
+    z-index: 2; /* Sobre el before, debajo del content */
     pointer-events: none; /* Dejamos que los clics pasen al contenido */
 }
 
@@ -277,7 +277,7 @@ ul {
 .hero-content {
     max-width: 800px;
     position: relative;
-    z-index: 2;
+    z-index: 10; /* Bien por encima del canvas y backgrounds */
     animation: fadeInUP 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
     opacity: 0;
     transform: translateY(30px);

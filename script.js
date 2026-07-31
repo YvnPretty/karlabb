@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
             constructor() {
                 this.x = Math.random() * width;
                 this.y = Math.random() * height;
-                this.size = Math.random() * 8 + 4; // Tamaño
+                this.size = Math.random() * 16 + 8; // Tamaño más grande (8 a 24) para que se vean sí o sí
                 this.baseX = this.x;
                 this.baseY = this.y;
                 this.density = (Math.random() * 20) + 1;
