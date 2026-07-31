@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const observerOptions = {
         root: null,
         rootMargin: '0px',
-        threshold: 0.1
+        threshold: 0.15
     };
 
     const observer = new IntersectionObserver((entries, observer) => {
@@ -56,12 +56,50 @@ document.addEventListener('DOMContentLoaded', () => {
     // Seleccionar elementos para animar
     const sections = document.querySelectorAll('section');
     sections.forEach(section => {
-        // Excluir el hero que ya tiene su animación
         if (!section.classList.contains('hero')) {
             section.style.opacity = 0;
-            section.style.transform = 'translateY(20px)';
-            section.style.transition = 'opacity 0.8s ease-out, transform 0.8s ease-out';
+            section.style.transform = 'translateY(40px)'; // Mayor distancia para más dramatismo
+            section.style.transition = 'opacity 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
             observer.observe(section);
         }
+    });
+
+    // --- SCROLL LENTO (Smooth Scroll Premium) ---
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            
+            const targetElement = document.querySelector(targetId);
+            if (!targetElement) return;
+
+            // Calcular posición teniendo en cuenta la altura del navbar fijo
+            const navHeight = document.querySelector('.navbar').offsetHeight;
+            const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navHeight;
+            const startPosition = window.pageYOffset;
+            const distance = targetPosition - startPosition;
+            const duration = 1500; // 1.5 segundos para un scroll verdaderamente "lento" y elegante
+            let start = null;
+
+            function step(timestamp) {
+                if (!start) start = timestamp;
+                const progress = timestamp - start;
+                
+                // Función de aceleración suave (easeInOutQuart)
+                const easeInOutQuart = progress < duration / 2
+                    ? 8 * Math.pow(progress / duration, 4)
+                    : 1 - Math.pow(-2 * (progress / duration) + 2, 4) / 2;
+                
+                window.scrollTo(0, startPosition + distance * easeInOutQuart);
+                
+                if (progress < duration) {
+                    window.requestAnimationFrame(step);
+                } else {
+                    window.history.pushState(null, null, targetId);
+                }
+            }
+            window.requestAnimationFrame(step);
+        });
     });
 });
